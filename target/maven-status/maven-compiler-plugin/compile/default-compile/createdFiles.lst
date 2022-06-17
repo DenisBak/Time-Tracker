@@ -1,9 +1,0 @@
-com/denis/domain/Day.class
-com/denis/view/Login.class
-com/denis/domain/dao/TaskDao.class
-com/denis/domain/User.class
-com/denis/domain/dao/ConnectionFactory.class
-com/denis/domain/dao/UserDto.class
-com/denis/domain/dao/UserDao.class
-com/denis/control/RequestParameters.class
-com/denis/domain/Task.class
