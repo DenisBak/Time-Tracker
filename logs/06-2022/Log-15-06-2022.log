@@ -1,0 +1,4 @@
+2022-06-15 21:27:46,101 DEBUG c.d.d.f.ConfigFactory [main] Configuration readability: false
+2022-06-15 21:27:47,720 DEBUG c.d.d.d.UserDao [main] Was returned UserDto{id=1, username='login', password='pass', name='Denis'}
+2022-06-15 21:58:32,135 DEBUG c.d.d.f.ConfigFactory [main] Configuration readability: false
+2022-06-15 21:58:34,391 DEBUG c.d.d.d.UserDao [main] Was returned UserDto{id=1, username='login', password='pass', name='Denis'}

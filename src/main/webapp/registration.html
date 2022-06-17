@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+      .form {
+        margin-left: 25rem;
+        text-align: center;
+        border-style: groove;
+        width: 14rem;
+        height: 18rem;
+      }
+      .passwordRequirements {
+        margin-top: -18rem;
+        margin-left: 40rem;
+        border-style: dashed;
+        border-color: red;
+        width: 13rem;
+        height: 15rem;
+      }
+      .button {
+        margin-top: 5%;
+      }
+      .inputName {
+        margin-bottom: 1%;
+      }
+      a {
+        text-align: center;
+      }
+      h3 {
+      text-align: center;
+    }
+    h2 {
+        margin-left: 35rem;
+    }
+
+    </style>
+</head>
+
+<body>
+<h2>Registration</h2>
+<div class="form">
+    <form action="/timeTracker/registration" method="post">
+        <p class="inputName">Username: </p>
+        <input type="text" name="username">
+        <br>
+
+        <p class="inputName">Name: </p>
+        <input type="text" name="name">
+        <br>
+
+        <p class="inputName">Password: </p>
+        <input type="password" name="firstPassword">
+        <br>
+
+        <p class="inputName">Password again: </p>
+        <input type="password" name="secondPassword">
+        <br>
+
+        <input type="submit" value="Register" class="button">
+    </form>
+    <br>
+</div>
+<div class="passwordRequirements">
+    <h3>Password requirements</h3>
+    <ul>
+        <li>Length has to be of 8 characters or more.</li>
+        <li>At least one digit.</li>
+        <li>At least one special character.</li>
+        <li>At least one uppercase character.</li>
+        <li>At least one lowercase character.</li>
+    </ul>
+</div>
+</body>
+</html>

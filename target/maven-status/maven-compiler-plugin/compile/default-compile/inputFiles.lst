@@ -1,0 +1,17 @@
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/dao/ConnectionFactory.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/exceptions/DomainException.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/control/Protector.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/factories/ConfigFactory.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/Day.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/dao/TaskDao.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/dao/UserDto.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/User.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/exceptions/ControlException.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/control/PasswordCheck.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/view/Login.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/view/Logout.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/exceptions/DAOException.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/dao/UserDao.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/view/Registration.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/view/Workspace.java
+/home/denis/eclipse-workspace/TimeTracker/src/main/java/com/denis/domain/Task.java
