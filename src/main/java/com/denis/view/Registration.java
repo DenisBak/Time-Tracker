@@ -58,8 +58,9 @@ public class Registration extends HttpServlet {
 
             req.getRequestDispatcher("/links.html").include(req, resp);
             req.getRequestDispatcher("/registration.html").include(req, resp); // TODO: 6/6/22 repeated logic (such as that in doGet() method)
+            out.println("<br>");
             out.println(
-                    "<h3 style=\"color: red; text-align: center;\">" + exceptionConfig.getString("usernameAlreadyTaken") +"</h3>"
+                    "<h3 style=\"color: red; text-align: center;\">" + e.getMessage() +"</h3>"
             );
         }
     }
