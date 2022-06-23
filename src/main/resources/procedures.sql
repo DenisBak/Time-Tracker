@@ -4,6 +4,7 @@ CREATE TABLE Tasks (
     UserID int NOT NULL,
     Description varchar(255) NOT NULL,
     Duration time NOT NULL,
+    Date DATE NOT NULL,
     PRIMARY KEY (TaskID)
 );
 
