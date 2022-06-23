@@ -29,7 +29,6 @@ public class Workspace extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         User user;
         try {
             user = protector.checkUserAuthorization(req);
@@ -48,5 +47,10 @@ public class Workspace extends HttpServlet {
                     "<h3 style=\"color: red; text-align: center;\">" + exceptionConfig.getString("userNotLoggedIn") +"</h3>"
             ); // TODO: 6/15/22 message doesn't see think about how to include message in redirecting html
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 }

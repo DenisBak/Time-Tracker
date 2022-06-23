@@ -4,14 +4,14 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Task {
+public class Track {
     // TODO: 5/23/22 make restriction on description size (as in Tasks table)
 
 //    private final int id;
     private final String description;
     private final Duration duration;
 
-    public Task(String description, String startTime, String endTime) {
+    public Track(String description, String startTime, String endTime) {
         this.description = Objects.requireNonNull(description);
         LocalTime start = LocalTime.parse(
                 Objects.requireNonNull(startTime)
