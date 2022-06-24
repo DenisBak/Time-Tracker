@@ -8,5 +8,5 @@ Web-app that was written on java servlet.
 <b>For starting web-app you need:</b>
 <li>Start tomcat</li>
 <li>Create war</li>
-<li>Deploy war to <tomcatHome>/webapps/</li>
-<li>In browser go to <yourLocalHostAddress>/timeTracker</li>
+<li>Deploy war to [tomcatHome]/webapps/</li>
+<li>In browser go to [yourLocalHostAddress]/[warName]</li>
