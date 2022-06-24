@@ -1,7 +1,7 @@
 package com.denis.domain;
 
-import com.denis.domain.dao.UserDao;
-import com.denis.domain.dao.UserDto;
+import com.denis.domain.dao.user.UserDao;
+import com.denis.domain.dao.user.UserDto;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.exceptions.DomainException;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +14,7 @@ public class User {
     private String name;
 
     private static UserDao dao = UserDao.getInstance();
-    private static Logger logger = LogManager.getLogger();;
+    private static Logger logger = LogManager.getLogger();
 
     protected User(String username, String password, String name) {
         setUsername(username);
@@ -22,7 +22,7 @@ public class User {
         setName(name);
     }
 
-    protected User(int id, String username, String password, String name) throws DomainException {
+    protected User(int id, String username, String password, String name) {
         this(username, password, name);
         setId(id);
     }

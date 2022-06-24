@@ -1,4 +1,4 @@
-package com.denis.domain.dao;
+package com.denis.domain.dao.user;
 
 public class UserDto {
     private int id;

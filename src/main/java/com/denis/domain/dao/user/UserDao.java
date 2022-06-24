@@ -1,6 +1,7 @@
-package com.denis.domain.dao;
+package com.denis.domain.dao.user;
 
 import com.denis.domain.User;
+import com.denis.domain.dao.ConnectionFactory;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.factories.ConfigFactory;
 import org.apache.commons.configuration2.Configuration;

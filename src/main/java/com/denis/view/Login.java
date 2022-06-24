@@ -1,12 +1,9 @@
 package com.denis.view;
 
 import com.denis.control.Protector;
-import com.denis.domain.dao.UserDto;
 import com.denis.domain.exceptions.ControlException;
 import com.denis.domain.factories.ConfigFactory;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,8 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class Login extends HttpServlet {
     private Logger logger;

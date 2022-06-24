@@ -8,9 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
 
 public class TrackDao {
     private static TrackDao instance;
@@ -35,5 +32,13 @@ public class TrackDao {
         return instance;
     }
 
-
+//    public void createTrack(Track track) throws DAOException {
+//        if (track == null) {
+//            exceptionsConfig.setProperty("failedParameter", "User");
+//            throw new DAOException(new NullPointerException(
+//                    exceptionsConfig.getString("parameterNull")
+//            ));
+//        }
+//        createUser(track.getUsername(), track.getPassword(), track.getName());
+//    }
 }
