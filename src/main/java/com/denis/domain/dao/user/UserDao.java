@@ -53,13 +53,13 @@ public class UserDao {
             ));
         }
 
-        String createUser;
+        String createUserStatement;
         PreparedStatement statement = null;
 
         try {
-            createUser = statementsConfig.getString("createUser");
+            createUserStatement = statementsConfig.getString("createUser");
             connection = ConnectionFactory.getConnection();
-            statement = connection.prepareStatement(createUser);
+            statement = connection.prepareStatement(createUserStatement);
 
             statement.setString(1, username);
             statement.setString(2, password);
@@ -67,8 +67,8 @@ public class UserDao {
 
             statement.execute();
         } catch (SQLException e) {
-            exceptionsConfig.setProperty("failedUser", new UserDto(0, username, password, name)); // 0 because we can retrieve id only from db, here exception is throwing => record not created => user doesn't have id
-            throw new DAOException(exceptionsConfig.getString("createUserFail"), e);
+            exceptionsConfig.setProperty("failedObject", new UserDto(0, username, password, name)); // 0 because we can retrieve id only from db, here exception is throwing => record not created => user doesn't have id
+            throw new DAOException(exceptionsConfig.getString("createFail"), e);
         } finally {
             try {
                 if (statement != null) {
@@ -99,13 +99,13 @@ public class UserDao {
 
         ResultSet resultSet = null;
         PreparedStatement statement = null;
-        String getIdQuery;
+        String getIdStatement;
 
         try {
-            getIdQuery = statementsConfig.getString("getUserId");
+            getIdStatement = statementsConfig.getString("getUserId");
 
             connection = ConnectionFactory.getConnection();
-            statement = connection.prepareStatement(getIdQuery);
+            statement = connection.prepareStatement(getIdStatement);
             statement.setString(1, username);
             resultSet = statement.executeQuery();
 
@@ -152,13 +152,13 @@ public class UserDao {
 
         ResultSet resultSet = null;
         PreparedStatement statement = null;
-        String getIdQuery;
+        String getIdStatement;
 
         try {
-            getIdQuery = statementsConfig.getString("getUser");
+            getIdStatement = statementsConfig.getString("getUser");
 
             connection = ConnectionFactory.getConnection();
-            statement = connection.prepareStatement(getIdQuery);
+            statement = connection.prepareStatement(getIdStatement);
             statement.setString(1, username);
             statement.setString(2, password);
             resultSet = statement.executeQuery();

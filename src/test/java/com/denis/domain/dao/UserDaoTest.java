@@ -1,6 +1,8 @@
 package com.denis.domain.dao;
 
 import com.denis.domain.User;
+import com.denis.domain.dao.user.UserDao;
+import com.denis.domain.dao.user.UserDto;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.exceptions.DomainException;
 import org.hamcrest.MatcherAssert;

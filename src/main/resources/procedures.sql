@@ -1,9 +1,9 @@
 
-CREATE TABLE Tasks (
+CREATE TABLE Tracks (
     TaskID int NOT NULL AUTO_INCREMENT,
     UserID int NOT NULL,
     Description varchar(255) NOT NULL,
-    Duration time NOT NULL,
+    Duration VARCHAR(255) NOT NULL,
     Date DATE NOT NULL,
     PRIMARY KEY (TaskID)
 );
@@ -17,9 +17,9 @@ CREATE TABLE Users (
     UNIQUE (UserName)
 );
 
-INSERT INTO Tasks VALUES (NULL, 1, "test", "20:24");
+INSERT INTO Tracks VALUES (NULL, 1, "test", "20:24");
 INSERT INTO Users VALUES (NULL, "login", "pass", "Denis");
 
-DELETE FROM Tasks WHERE TaskID = 2;
+DELETE FROM Tracks WHERE TaskID = 2;
 
-INSERT INTO Tasks VALUES (NULL, ?, ?, ?);
+INSERT INTO Tracks VALUES (NULL, ?, ?, ?);
