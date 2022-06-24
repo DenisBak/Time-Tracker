@@ -18,7 +18,7 @@
 </head>
 <body>
 <br><br>
-<form method="post" action="/timeTracker/taskLoader">
+<form method="post" action="/timeTracker/workspace">
     <label for="task">Task:</label>
     <input type="text" id="task" name="task">
     <br><br>
@@ -27,7 +27,10 @@
     <br><br>
     <label for="endTime">End time:</label>
     <input type="time" id="endTime" name="endTime">
+    <input type="date" id="date" name="date" style="display: none">
     <input type="submit" value="Send">
 </form>
+<script src="/timeTracker/hideDate.js">
+</script>
 </body>
 </html>

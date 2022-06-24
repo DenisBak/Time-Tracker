@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 public class Workspace extends HttpServlet {
     private Logger logger;
@@ -50,7 +51,9 @@ public class Workspace extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        req.getParameterMap().forEach(
+                (k, v) -> logger.debug(k + " - " + Arrays.toString(v))
+        );
     }
 }
