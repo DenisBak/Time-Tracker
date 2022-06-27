@@ -10,7 +10,7 @@ public class TrackDto {
     private final Duration duration;
     private final LocalDate date;
 
-    public TrackDto(int id, int userId, String description, Duration duration, LocalDate date) {
+    protected TrackDto(int id, int userId, String description, Duration duration, LocalDate date) {
         this.id = id;
         this.description = description;
         this.duration = duration;

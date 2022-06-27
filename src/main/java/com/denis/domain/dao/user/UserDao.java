@@ -155,7 +155,7 @@ public class UserDao {
         String getIdStatement;
 
         try {
-            getIdStatement = statementsConfig.getString("getUser");
+            getIdStatement = statementsConfig.getString("getUserByUsernameAndPassword");
 
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(getIdStatement);
