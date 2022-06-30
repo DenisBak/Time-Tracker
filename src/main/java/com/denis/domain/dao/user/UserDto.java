@@ -1,5 +1,10 @@
 package com.denis.domain.dao.user;
 
+import com.denis.domain.Track;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDto {
     private int id;
     private String username;

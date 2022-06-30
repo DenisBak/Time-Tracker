@@ -2,6 +2,7 @@ package com.denis.domain.dao.user;
 
 import com.denis.domain.User;
 import com.denis.domain.dao.ConnectionFactory;
+import com.denis.domain.dao.track.TrackDao;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.factories.ConfigFactory;
 import org.apache.commons.configuration2.Configuration;
@@ -9,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserDao {
     private static UserDao instance;
@@ -150,7 +152,8 @@ public class UserDao {
             ));
         }
 
-        ResultSet resultSet = null;
+        ResultSet info = null;
+        ResultSet tracks = null;
         PreparedStatement statement = null;
         String getIdStatement;
 
@@ -161,14 +164,14 @@ public class UserDao {
             statement = connection.prepareStatement(getIdStatement);
             statement.setString(1, username);
             statement.setString(2, password);
-            resultSet = statement.executeQuery();
+            info = statement.executeQuery();
 
-            resultSet.next();
+            info.next();
             UserDto userDto = new UserDto(
-                    resultSet.getInt("UserID"),
-                    resultSet.getString("UserName"),
-                    resultSet.getString("Password"),
-                    resultSet.getString("Name")
+                    info.getInt("UserID"),
+                    info.getString("UserName"),
+                    info.getString("Password"),
+                    info.getString("Name")
             );
             logger.debug("Was returned " + userDto);
             return userDto;
@@ -177,8 +180,8 @@ public class UserDao {
             throw new DAOException(exceptionsConfig.getString("retrieveUserIdFail"), e);
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
+                if (info != null) {
+                    info.close();
                 }
             } catch (SQLException e) {
                 logger.error(exceptionsConfig.getString("closeResultSetFail"), new DAOException(e));

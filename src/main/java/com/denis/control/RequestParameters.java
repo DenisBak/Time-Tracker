@@ -6,7 +6,12 @@ public enum RequestParameters {
     NAME     ("name"),
 
     FIRST_PASSWORD_REG  ("firstPassword"),
-    SECOND_PASSWORD_REG ("secondPassword");
+    SECOND_PASSWORD_REG ("secondPassword"),
+
+    DESCRIPTION ("description"),
+    START_TIME  ("startTime"),
+    END_TIME    ("endTime"),
+    DATE        ("date");
 
     private final String name;
 

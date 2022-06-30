@@ -1,7 +1,6 @@
 package com.denis.domain.dao.track;
 
 import com.denis.domain.dao.ConnectionFactory;
-import com.denis.domain.dao.user.UserDto;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.Track;
 import com.denis.domain.factories.ConfigFactory;
@@ -12,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrackDao {
     private static TrackDao instance;
@@ -110,7 +111,7 @@ public class TrackDao {
         String getTrackStatement;
 
         try {
-            getTrackStatement = statementsConfig.getString("getTrackById");
+            getTrackStatement = statementsConfig.getString("getTracksById");
 
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(getTrackStatement);
@@ -130,6 +131,71 @@ public class TrackDao {
         } catch (SQLException e) {
             exceptionsConfig.setProperty("failedParameter", id);
             throw new DAOException(exceptionsConfig.getString("retrieveTrackFail"), e);
+        } finally { // TODO: 6/27/22 think about creating general method close(ResultSet, Statement, Connection);
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error(exceptionsConfig.getString("closeResultSetFail"), new DAOException(e));
+            }
+
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                logger.error(exceptionsConfig.getString("closeStatementFail"), new DAOException(e));
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                logger.error(exceptionsConfig.getString("closeConnectionFail"), new DAOException(e));
+            }
+        }
+    }
+
+    public List<TrackDto> retrieveTracksDtoByUserId(int id) throws DAOException {
+        if (id <= 0) {
+            exceptionsConfig.setProperty("failedParameter", "Track Id");
+            throw new DAOException(new NullPointerException(
+                    exceptionsConfig.getString("parameterNull")
+            ));
+        }
+
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        String getTracksStatement;
+
+        try {
+            getTracksStatement = statementsConfig.getString("getTracksByUserId");
+
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(getTracksStatement);
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
+
+            TrackDto trackDto;
+            List<TrackDto> tracksDto = new ArrayList<>();
+            logger.info("tracks dto is find " + tracksDto);
+            while (resultSet.next()) {
+                trackDto = new TrackDto(
+                        resultSet.getInt("TrackID"), // TODO: 6/27/22 CREATE ENUM FOR COLUMN NAMES
+                        resultSet.getInt("UserID"),
+                        resultSet.getString("Description"),
+                        Duration.parse(resultSet.getString("Duration")),
+                        LocalDate.parse(resultSet.getString("Date"))
+                );
+                tracksDto.add(trackDto);
+                logger.debug("Was returned " + trackDto + " for userId - " + id);
+            }
+            return tracksDto;
+        } catch (SQLException e) {
+            exceptionsConfig.setProperty("failedParameter", id);
+            throw new DAOException(exceptionsConfig.getString("retrieveTracksFail"), e);
         } finally { // TODO: 6/27/22 think about creating general method close(ResultSet, Statement, Connection);
             try {
                 if (resultSet != null) {
