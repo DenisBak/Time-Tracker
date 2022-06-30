@@ -27,12 +27,12 @@
     </welcome-file-list>
 
   <servlet>
-    <servlet-name>taskLoader</servlet-name>
-    <servlet-class>com.denis.view.TaskLoader</servlet-class>
+    <servlet-name>trackLoader</servlet-name>
+    <servlet-class>com.denis.view.TrackLoader</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>taskLoader</servlet-name>
-    <url-pattern>/taskLoader</url-pattern>
+    <servlet-name>trackLoader</servlet-name>
+    <url-pattern>/trackLoader</url-pattern>
   </servlet-mapping>
 
     <servlet>

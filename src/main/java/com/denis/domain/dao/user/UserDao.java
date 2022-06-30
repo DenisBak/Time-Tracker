@@ -1,6 +1,8 @@
-package com.denis.domain.dao;
+package com.denis.domain.dao.user;
 
 import com.denis.domain.User;
+import com.denis.domain.dao.ConnectionFactory;
+import com.denis.domain.dao.track.TrackDao;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.factories.ConfigFactory;
 import org.apache.commons.configuration2.Configuration;
@@ -8,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserDao {
     private static UserDao instance;
@@ -52,13 +55,13 @@ public class UserDao {
             ));
         }
 
-        String createUser;
+        String createUserStatement;
         PreparedStatement statement = null;
 
         try {
-            createUser = statementsConfig.getString("createUser");
+            createUserStatement = statementsConfig.getString("createUser");
             connection = ConnectionFactory.getConnection();
-            statement = connection.prepareStatement(createUser);
+            statement = connection.prepareStatement(createUserStatement);
 
             statement.setString(1, username);
             statement.setString(2, password);
@@ -66,8 +69,8 @@ public class UserDao {
 
             statement.execute();
         } catch (SQLException e) {
-            exceptionsConfig.setProperty("failedUser", new UserDto(0, username, password, name)); // 0 because we can retrieve id only from db, here exception is throwing => record not created => user doesn't have id
-            throw new DAOException(exceptionsConfig.getString("createUserFail"), e);
+            exceptionsConfig.setProperty("failedObject", new UserDto(0, username, password, name)); // 0 because we can retrieve id only from db, here exception is throwing => record not created => user doesn't have id
+            throw new DAOException(exceptionsConfig.getString("createFail"), e);
         } finally {
             try {
                 if (statement != null) {
@@ -98,13 +101,13 @@ public class UserDao {
 
         ResultSet resultSet = null;
         PreparedStatement statement = null;
-        String getIdQuery;
+        String getIdStatement;
 
         try {
-            getIdQuery = statementsConfig.getString("getUserId");
+            getIdStatement = statementsConfig.getString("getUserId");
 
             connection = ConnectionFactory.getConnection();
-            statement = connection.prepareStatement(getIdQuery);
+            statement = connection.prepareStatement(getIdStatement);
             statement.setString(1, username);
             resultSet = statement.executeQuery();
 
@@ -149,25 +152,26 @@ public class UserDao {
             ));
         }
 
-        ResultSet resultSet = null;
+        ResultSet info = null;
+        ResultSet tracks = null;
         PreparedStatement statement = null;
-        String getIdQuery;
+        String getIdStatement;
 
         try {
-            getIdQuery = statementsConfig.getString("getUser");
+            getIdStatement = statementsConfig.getString("getUserByUsernameAndPassword");
 
             connection = ConnectionFactory.getConnection();
-            statement = connection.prepareStatement(getIdQuery);
+            statement = connection.prepareStatement(getIdStatement);
             statement.setString(1, username);
             statement.setString(2, password);
-            resultSet = statement.executeQuery();
+            info = statement.executeQuery();
 
-            resultSet.next();
+            info.next();
             UserDto userDto = new UserDto(
-                    resultSet.getInt("UserID"),
-                    resultSet.getString("UserName"),
-                    resultSet.getString("Password"),
-                    resultSet.getString("Name")
+                    info.getInt("UserID"),
+                    info.getString("UserName"),
+                    info.getString("Password"),
+                    info.getString("Name")
             );
             logger.debug("Was returned " + userDto);
             return userDto;
@@ -176,8 +180,8 @@ public class UserDao {
             throw new DAOException(exceptionsConfig.getString("retrieveUserIdFail"), e);
         } finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
+                if (info != null) {
+                    info.close();
                 }
             } catch (SQLException e) {
                 logger.error(exceptionsConfig.getString("closeResultSetFail"), new DAOException(e));
