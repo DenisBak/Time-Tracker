@@ -9,6 +9,7 @@ import com.denis.domain.exceptions.ControlException;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.factories.ConfigNames;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class Workspace extends HttpServlet {
     public Workspace() {
         logger = LogManager.getLogger();
         protector = Protector.getInstance();
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
+        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
         userController = UserController.getInstance();
     }
 

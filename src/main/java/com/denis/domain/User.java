@@ -1,5 +1,6 @@
 package com.denis.domain;
 
+import com.denis.domain.dao.track.TrackDto;
 import com.denis.domain.dao.user.UserDao;
 import com.denis.domain.dao.user.UserDto;
 import com.denis.domain.exceptions.DAOException;
@@ -30,6 +31,10 @@ public class User {
         setName(name);
     }
 
+    private User(UserDto dto) {
+        this(dto.getId(), dto.getUsername(), dto.getPassword(), dto.getName());
+    }
+
     public static User createUser(String username, String password, String name) throws DomainException {
         User user;
         try {
@@ -48,7 +53,7 @@ public class User {
         try {
             dto = dao.retrieveUserDto(username, password);
             logger.debug("DTO was retrieved " + dto);
-            user = new User(dto.getId(), dto.getUsername(), dto.getPassword(), dto.getName()); // TODO: 6/29/22 create from dto constructor
+            user = new User(dto);
             user.setTracks(Track.getTracksByUserId(dto.getId()));
             logger.debug("User was retrieved " + user);
         } catch (DAOException e) {
@@ -121,8 +126,7 @@ public class User {
     }
 
     public List<Track> getTracks() {
-        // TODO: 6/29/22 return new ArrayList(tracks)
         logger.info("user with id - " + id + " was returned tracks - " + tracks);
-        return tracks;
+        return new ArrayList<>(tracks);
     }
 }

@@ -4,6 +4,7 @@ import com.denis.domain.User;
 import com.denis.domain.exceptions.ControlException;
 import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.factories.ConfigNames;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ import java.util.Map;
 import static com.denis.control.RequestParameters.*;
 
 public class Protector {
+    private static final int SIX_HOURS = 60 * 60 * 6;
+
     private static Protector instance;
     private static Logger logger;
     private static Configuration exceptionConfig;
@@ -32,7 +35,7 @@ public class Protector {
 
     private Protector() {
         logger = LogManager.getLogger();
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
+        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     public static Protector getInstance() {
@@ -126,7 +129,8 @@ public class Protector {
     }
 
     private void setSidCookie(String cookieValue, HttpServletResponse resp) {
-        Cookie sidCookie = new Cookie(sidCookieName, cookieValue); // TODO: 6/2/22 set live time of cookies
+        Cookie sidCookie = new Cookie(sidCookieName, cookieValue);
+        sidCookie.setMaxAge(SIX_HOURS);
         resp.addCookie(sidCookie);
     }
 

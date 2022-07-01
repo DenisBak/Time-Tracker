@@ -5,6 +5,7 @@ import com.denis.domain.User;
 import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.exceptions.NegativeDurationException;
 import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.factories.ConfigNames;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,7 @@ public class UserController {
 
     private UserController() {
         logger = LogManager.getLogger();
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
+        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     public static UserController getInstance() {

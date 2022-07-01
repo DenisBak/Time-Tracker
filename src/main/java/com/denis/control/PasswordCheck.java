@@ -2,6 +2,7 @@ package com.denis.control;
 
 import com.denis.domain.exceptions.ControlException;
 import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.factories.ConfigNames;
 import org.apache.commons.configuration2.Configuration;
 
 public class PasswordCheck {
@@ -14,7 +15,7 @@ public class PasswordCheck {
     private static int minSpecialsLength = 1;
 
     static {
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
+        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     public static boolean run(String firstPassword, String secondPassword) throws ControlException {
@@ -31,7 +32,8 @@ public class PasswordCheck {
         int totalSpecial = 0;
         int totalDigits = 0;
 
-        String password = firstPassword; // For convenience
+        @SuppressWarnings({"WeakerAccess"})
+        String password = firstPassword; // For convenience (because passwords equals) -> password = firstPassword = secondPassword
 
         if (password.length() < minPasswordLength) {
             throw new ControlException(exceptionConfig.getString("passwordLengthTooLow"));

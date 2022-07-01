@@ -6,6 +6,7 @@ import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.exceptions.NegativeDurationException;
 import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.factories.ConfigNames;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,12 +30,15 @@ public class Track {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static Logger logger = LogManager.getLogger();
-    private static Configuration exceptionsConfig = ConfigFactory.getConfigByName("exceptions");
+    private static Configuration exceptionsConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
 
 
     protected Track(int id, int userId, String description, String startTime, String endTime, String date) { // TODO: 6/27/22 think about builder pattern
+        assert id > 0;
+        assert userId > 0;
+
         this.id = id;
-        this.userId = userId; // TODO: 6/24/22 guard cause
+        this.userId = userId;
         this.description = Objects.requireNonNull(description);
         LocalTime start = LocalTime.parse(
                 Objects.requireNonNull(startTime)

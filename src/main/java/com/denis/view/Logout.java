@@ -2,6 +2,7 @@ package com.denis.view;
 
 import com.denis.control.Protector;
 import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.factories.ConfigNames;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +21,11 @@ public class Logout extends HttpServlet {
     public Logout() {
         logger = LogManager.getLogger();
         protector = Protector.getInstance();
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
+        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         protector.logoutUser(req, resp);
         resp.sendRedirect("/timeTracker/index.html");
     }

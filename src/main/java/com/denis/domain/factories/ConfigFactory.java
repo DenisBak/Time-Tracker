@@ -11,7 +11,6 @@ import java.io.File;
 import java.util.*;
 
 public class ConfigFactory {
-    // TODO: 6/3/22 create Enum with configs names such EXCEPTION_CONFIG = exceptions
     private static Map<String, Configuration> allConfigurations;
     private static Configurations configs = new Configurations();
     private static Logger logger = LogManager.getLogger();
@@ -47,7 +46,7 @@ public class ConfigFactory {
         }
     }
 
-    public static Configuration getConfigByName(String propertiesName) {
-        return allConfigurations.get(propertiesName);
+    public static Configuration getConfigByName(ConfigNames name) {
+        return allConfigurations.get(name.getName());
     }
 }

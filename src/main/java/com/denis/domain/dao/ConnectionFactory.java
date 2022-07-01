@@ -2,6 +2,7 @@ package com.denis.domain.dao;
 
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.factories.ConfigNames;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
@@ -24,8 +25,8 @@ public class ConnectionFactory {
         MysqlDataSource mysqlDS = new MysqlDataSource();
         logger = LogManager.getLogger();
         
-        dbConfig = ConfigFactory.getConfigByName("db");
-        exceptionsConfig = ConfigFactory.getConfigByName("exceptions");
+        dbConfig = ConfigFactory.getConfigByName(ConfigNames.DB);
+        exceptionsConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
 
         mysqlDS.setURL(dbConfig.getString("url") + dbConfig.getString("name"));
         mysqlDS.setUser(dbConfig.getString("username"));
