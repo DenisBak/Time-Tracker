@@ -1,15 +1,13 @@
 package com.denis.view;
 
 import com.denis.control.Protector;
-import com.denis.control.RequestParameters;
 import com.denis.control.UserController;
 import com.denis.domain.Track;
 import com.denis.domain.User;
 import com.denis.domain.exceptions.ControlException;
-import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.exceptions.DomainException;
-import com.denis.domain.factories.ConfigFactory;
-import com.denis.domain.factories.ConfigNames;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,13 +16,9 @@ import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.denis.control.RequestParameters.*;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Workspace extends HttpServlet {
     private Logger logger;

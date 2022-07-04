@@ -1,8 +1,8 @@
 package com.denis.control;
 
 import com.denis.domain.exceptions.ControlException;
-import com.denis.domain.factories.ConfigFactory;
-import com.denis.domain.factories.ConfigNames;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import org.apache.commons.configuration2.Configuration;
 
 public class PasswordCheck {

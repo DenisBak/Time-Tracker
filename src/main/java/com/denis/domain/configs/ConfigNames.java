@@ -1,9 +1,10 @@
-package com.denis.domain.factories;
+package com.denis.domain.configs;
 
 public enum ConfigNames {
     DB ("db"),
     EXCEPTIONS ("exceptions"),
-    STATEMENTS("statements");
+    STATEMENTS("statements"),
+    LOGGER_MESSAGES ("loggerMessages");
 
     private String name;
 

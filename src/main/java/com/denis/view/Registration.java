@@ -1,10 +1,9 @@
 package com.denis.view;
 
 import com.denis.control.Protector;
-import com.denis.domain.User;
 import com.denis.domain.exceptions.ControlException;
-import com.denis.domain.factories.ConfigFactory;
-import com.denis.domain.factories.ConfigNames;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

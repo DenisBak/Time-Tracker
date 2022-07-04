@@ -1,4 +1,4 @@
-package com.denis.domain.factories;
+package com.denis.domain.configs;
 
 import com.denis.domain.exceptions.DomainException;
 import org.apache.commons.configuration2.Configuration;

@@ -1,8 +1,8 @@
 package com.denis.domain.dao;
 
 import com.denis.domain.exceptions.DAOException;
-import com.denis.domain.factories.ConfigFactory;
-import com.denis.domain.factories.ConfigNames;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +16,7 @@ public abstract class Dao {
     protected static Logger logger;
     protected static Configuration exceptionsConfig;
     protected static Configuration statementsConfig;
+    protected static Configuration loggerMessages;
 
     protected Connection connection;
 
@@ -23,6 +24,7 @@ public abstract class Dao {
         logger = LogManager.getLogger();
         exceptionsConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
         statementsConfig = ConfigFactory.getConfigByName(ConfigNames.STATEMENTS);
+        loggerMessages = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
     }
 
     public void close(Statement statement, Connection connection) {

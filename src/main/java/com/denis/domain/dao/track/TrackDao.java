@@ -131,7 +131,7 @@ public class TrackDao extends Dao {
 
             TrackDto trackDto;
             List<TrackDto> tracksDto = new ArrayList<>();
-            logger.info("tracks dto is find " + tracksDto);
+            logger.info(loggerMessages.getString("trackDtoFind") + tracksDto);
             while (resultSet.next()) {
                 trackDto = new TrackDto(
                         resultSet.getInt(TRACK_ID.getColumnName()),
