@@ -48,31 +48,31 @@ public class Workspace extends HttpServlet {
         try {
             user = protector.checkUserAuthorization(req);
             logger.info("working with user: " + user);
+
+            req.getRequestDispatcher("/links.html").include(req, resp);
+            out.println("<h1>Welcome back, " + user.getName() + "!</h1>");
+            req.getRequestDispatcher("/timeForm.html").include(req, resp);
+
+            List<Track> tracks = user.getTracks();
+            logger.info("Tracks was returned " + tracks);
+            out.println("<h2>Your tracks:</h2>");
+
+            for (Track track : tracks) {
+                out.println("<h3>" + track.getStringRepresentation() + "</h3>");
+                logger.info("Printed track " + track);
+            }
         } catch (ControlException e) {
             logger.error(e.getMessage(), e);
 
-            resp.sendRedirect("/timeTracker/login");
+            req.getRequestDispatcher("/login").include(req, resp);
             out.println(
                     "<h3 style=\"color: red; text-align: center;\">" + exceptionConfig.getString("userNotLoggedIn") +"</h3>"
-            ); // TODO: 6/15/22 message doesn't see think about how to include message in redirecting html
-        }
-
-        req.getRequestDispatcher("/links.html").include(req, resp);
-        out.println("<h1>Welcome back, " + user.getName() + "!</h1>");
-        req.getRequestDispatcher("/timeForm.html").include(req, resp);
-
-        List<Track> tracks = user.getTracks();
-        logger.info("Tracks was returned " + tracks);
-        out.println("<h2>Your tracks:</h2>");
-
-        for (Track track : tracks) {
-            out.println("<h3>" + track.getStringRepresentation() + "</h3>");
-            logger.info("Printed track " + track);
+            );
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         PrintWriter out = resp.getWriter();
         resp.setContentType("text/html");
 
@@ -82,8 +82,8 @@ public class Workspace extends HttpServlet {
         } catch (DomainException e) {
             out.println(
                     "<h3 style=\"color: red; text-align: center;\">" + e.getMessage() +"</h3>"
-            ); // TODO: 6/15/22 message doesn't see think about how to include message in redirecting html
+            );
+            doGet(req, resp);
         }
     }
-    // TODO: 6/30/22 when start time and end time is none (in chrome form) than stack trace looked. Replace it on face exception
 }

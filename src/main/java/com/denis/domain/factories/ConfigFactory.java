@@ -20,7 +20,6 @@ public class ConfigFactory {
             allConfigurations = new HashMap<>();
 
             File configFile = new File("classes/propertiesLocations.properties");
-            logger.debug("Configuration readability: " + configFile.canRead());
 
             Configuration configsLocations = configs.properties(configFile);
 

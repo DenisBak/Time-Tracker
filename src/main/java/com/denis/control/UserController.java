@@ -45,7 +45,7 @@ public class UserController {
             user.addTrack(t);
             logger.info("track was created and added to user: " + user + "; track - " + t.getStringRepresentation());
 
-        } catch (DomainException e) {
+        } catch (Exception e) {
             logger.error(e);
             String message;
             if (e instanceof NegativeDurationException) message = exceptionConfig.getString("durationIsNegative");
