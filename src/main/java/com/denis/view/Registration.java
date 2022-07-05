@@ -1,9 +1,9 @@
 package com.denis.view;
 
 import com.denis.control.Protector;
-import com.denis.domain.User;
 import com.denis.domain.exceptions.ControlException;
-import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,25 +18,23 @@ import java.io.PrintWriter;
 public class Registration extends HttpServlet {
     private Logger logger;
     private Protector protector;
-    private Configuration exceptionConfig;
+
+    private static final Configuration loggerMessages = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
 
     public Registration() {
         logger = LogManager.getLogger();
         protector = Protector.getInstance();
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.info("get in registration");
         resp.setContentType("text/html");
         req.getRequestDispatcher("/links.html").include(req, resp);
         try {
             protector.checkUserAuthorization(req);
-            logger.debug("redirecting to workspace");
+            logger.debug(loggerMessages.getString("redirectWorkspace"));
             resp.sendRedirect("/timeTracker/workspace");
         } catch (ControlException e) {
-            logger.info("successfully include registration.html"); // TODO: 6/15/22 find by logger.info or logger.debug
             logger.error(e.getMessage(), e);
             req.getRequestDispatcher("/registration.html").include(req, resp);
         }
@@ -47,9 +45,7 @@ public class Registration extends HttpServlet {
         resp.setContentType("text/html");
 
         try {
-            logger.debug("Start registering process");
             protector.registerUser(req, resp);
-            logger.debug("Registering is success");
             resp.sendRedirect("/timeTracker/workspace");
         } catch (ControlException e) {
             PrintWriter out = resp.getWriter();
@@ -57,7 +53,7 @@ public class Registration extends HttpServlet {
             logger.error(e.getMessage(), e);
 
             req.getRequestDispatcher("/links.html").include(req, resp);
-            req.getRequestDispatcher("/registration.html").include(req, resp); // TODO: 6/6/22 repeated logic (such as that in doGet() method)
+            req.getRequestDispatcher("/registration.html").include(req, resp);
             out.println("<br>");
             out.println(
                     "<h3 style=\"color: red; text-align: center;\">" + e.getMessage() +"</h3>"

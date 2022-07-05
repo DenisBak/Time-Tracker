@@ -4,6 +4,7 @@ import com.denis.domain.Track;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserDto {
     private int id;
@@ -12,10 +13,12 @@ public class UserDto {
     private String name;
 
     protected UserDto(int id, String username, String password, String name) {
+        assert id > 0;
+
         this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
+        this.username = Objects.requireNonNull(username);
+        this.password = Objects.requireNonNull(password);
+        this.name = Objects.requireNonNull(name);
     }
 
     public int getId() {

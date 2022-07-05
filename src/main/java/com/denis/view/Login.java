@@ -2,7 +2,8 @@ package com.denis.view;
 
 import com.denis.control.Protector;
 import com.denis.domain.exceptions.ControlException;
-import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class Login extends HttpServlet {
     public Login() {
         logger = LogManager.getLogger();
         protector = Protector.getInstance();
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
+        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     @Override

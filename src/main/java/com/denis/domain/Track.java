@@ -5,7 +5,8 @@ import com.denis.domain.dao.track.TrackDto;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.exceptions.NegativeDurationException;
-import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,13 +29,17 @@ public class Track {
     private static final TrackDao dao = TrackDao.getInstance();
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static Logger logger = LogManager.getLogger();
-    private static Configuration exceptionsConfig = ConfigFactory.getConfigByName("exceptions");
+    private static final Logger logger = LogManager.getLogger();
+    private static final Configuration exceptionsConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
+    private static final Configuration loggerMessages = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
 
 
-    protected Track(int id, int userId, String description, String startTime, String endTime, String date) { // TODO: 6/27/22 think about builder pattern
+    protected Track(int id, int userId, String description, String startTime, String endTime, String date) {
+        assert id > 0;
+        assert userId > 0;
+
         this.id = id;
-        this.userId = userId; // TODO: 6/24/22 guard cause
+        this.userId = userId;
         this.description = Objects.requireNonNull(description);
         LocalTime start = LocalTime.parse(
                 Objects.requireNonNull(startTime)
@@ -69,17 +74,18 @@ public class Track {
         LocalDate date = LocalDate.parse(dateStr);
         try {
             track = getTrackFromRecentTracks(userId, description, duration);
+            logger.info(loggerMessages.getString("trackRetrievedRecent") + track);
         } catch (NoSuchElementException e) {
             try {
                 int id = dao.createTrack(userId, description, duration, date);
                 track = new Track(id, userId, description, startTime, endTime, dateStr);
+                logger.info(loggerMessages.getString("trackRetrievedDB") + track);
             } catch (DAOException ex) {
                 logger.error(ex);
                 throw new DomainException(ex);
             }
         }
 
-        logger.info("was retrieved track - " + track);
         recentTracks.add(track);
         return track;
     }
@@ -92,7 +98,7 @@ public class Track {
             ));
         }
 
-        logger.info("start find tracks for user id: " + id);
+        logger.info(loggerMessages.getString("startFindTracksForUserId") + id);
 
         List<TrackDto> tracksDto;
         try {

@@ -2,6 +2,7 @@ package com.denis.domain.dao.track;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class TrackDto {
     private final int id;
@@ -11,11 +12,14 @@ public class TrackDto {
     private final LocalDate date;
 
     protected TrackDto(int id, int userId, String description, Duration duration, LocalDate date) {
+        assert id > 0;
+        assert userId > 0;
+
         this.id = id;
-        this.description = description;
-        this.duration = duration;
-        this.date = date;
         this.userId = userId;
+        this.description = Objects.requireNonNull(description);
+        this.duration = Objects.requireNonNull(duration);
+        this.date = Objects.requireNonNull(date);
     }
 
     public int getId() {

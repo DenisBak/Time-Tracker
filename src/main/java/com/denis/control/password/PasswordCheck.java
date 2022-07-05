@@ -1,20 +1,17 @@
-package com.denis.control;
+package com.denis.control.password;
 
 import com.denis.domain.exceptions.ControlException;
-import com.denis.domain.factories.ConfigFactory;
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import org.apache.commons.configuration2.Configuration;
 
-public class PasswordCheck {
-    private static Configuration exceptionConfig;
+import static com.denis.control.password.MinLengths.*;
 
-    private static int minPasswordLength = 8;
-    private static int minUpCharsLength = 1;
-    private static int minLowCharsLength = 1;
-    private static int minDigitsLength = 1;
-    private static int minSpecialsLength = 1;
+public class PasswordCheck {
+    private static final Configuration exceptionConfig;
 
     static {
-        exceptionConfig = ConfigFactory.getConfigByName("exceptions");
+        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     public static boolean run(String firstPassword, String secondPassword) throws ControlException {
@@ -31,9 +28,10 @@ public class PasswordCheck {
         int totalSpecial = 0;
         int totalDigits = 0;
 
-        String password = firstPassword; // For convenience
+        @SuppressWarnings({"WeakerAccess"})
+        String password = firstPassword; // For convenience (because passwords equals) -> password = firstPassword = secondPassword
 
-        if (password.length() < minPasswordLength) {
+        if (password.length() < PASSWORD.getMinLength()) {
             throw new ControlException(exceptionConfig.getString("passwordLengthTooLow"));
         } else {
             for (char ch : password.toCharArray()) {
@@ -52,13 +50,13 @@ public class PasswordCheck {
             }
         }
 
-        if (totalUpChars < minUpCharsLength)
+        if (totalUpChars < UP_CHARS.getMinLength())
             throw new ControlException(exceptionConfig.getString("passwordMustContainUppercase"));
-        if (totalLowChars < minLowCharsLength)
+        if (totalLowChars < LOW_CHARS.getMinLength())
             throw new ControlException(exceptionConfig.getString("passwordMustContainLowercase"));
-        if (totalDigits < minDigitsLength)
+        if (totalDigits < DIGITS.getMinLength())
             throw new ControlException(exceptionConfig.getString("passwordMustContainDigits"));
-        if (totalSpecial < minSpecialsLength)
+        if (totalSpecial < SPECIALS.getMinLength())
             throw new ControlException(exceptionConfig.getString("passwordMustContainSpecials"));
 
         return true;
