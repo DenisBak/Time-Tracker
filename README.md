@@ -6,6 +6,7 @@ Web-app that was written on java servlet.
 <i><b>Most of this of course not realized but relax and enjoy creating proccess</b></i>
 <p></p>
 <b>For starting web-app you need:</b>
+<li>Start db (MySQL)</li>
 <li>Start tomcat</li>
 <li>Create war</li>
 <li>Deploy war to [tomcatHome]/webapps/</li>
