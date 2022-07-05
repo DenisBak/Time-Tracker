@@ -34,7 +34,7 @@ public class Track {
     private static final Configuration loggerMessages = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
 
 
-    protected Track(int id, int userId, String description, String startTime, String endTime, String date) { // TODO: 6/27/22 think about builder pattern
+    protected Track(int id, int userId, String description, String startTime, String endTime, String date) {
         assert id > 0;
         assert userId > 0;
 
