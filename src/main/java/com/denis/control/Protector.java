@@ -1,5 +1,6 @@
 package com.denis.control;
 
+import com.denis.control.password.PasswordCheck;
 import com.denis.domain.User;
 import com.denis.domain.exceptions.ControlException;
 import com.denis.domain.exceptions.DomainException;
