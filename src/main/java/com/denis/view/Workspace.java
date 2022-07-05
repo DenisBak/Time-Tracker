@@ -41,19 +41,16 @@ public class Workspace extends HttpServlet {
 
         try {
             user = protector.checkUserAuthorization(req);
-            logger.info("working with user: " + user);
 
             req.getRequestDispatcher("/links.html").include(req, resp);
             out.println("<h1>Welcome back, " + user.getName() + "!</h1>");
             req.getRequestDispatcher("/timeForm.html").include(req, resp);
 
             List<Track> tracks = user.getTracks();
-            logger.info("Tracks was returned " + tracks);
             out.println("<h2>Your tracks:</h2>");
 
             for (Track track : tracks) {
                 out.println("<h3>" + track.getStringRepresentation() + "</h3>");
-                logger.info("Printed track " + track);
             }
         } catch (ControlException e) {
             logger.error(e.getMessage(), e);
@@ -71,7 +68,7 @@ public class Workspace extends HttpServlet {
         resp.setContentType("text/html");
 
         try {
-            userController.createTrack(user, req);
+            userController.createAndAddTrack(user, req);
             resp.sendRedirect("/timeTracker/workspace");
         } catch (DomainException e) {
             out.println(

@@ -6,9 +6,9 @@ import com.denis.domain.configs.ConfigNames;
 import org.apache.commons.configuration2.Configuration;
 
 public class PasswordCheck {
-    private static Configuration exceptionConfig;
+    private static final Configuration exceptionConfig;
 
-    private static int minPasswordLength = 8;
+    private static int minPasswordLength = 8; // TODO: 7/5/22 maybe Enum
     private static int minUpCharsLength = 1;
     private static int minLowCharsLength = 1;
     private static int minDigitsLength = 1;

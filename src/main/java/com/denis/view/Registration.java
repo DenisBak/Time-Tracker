@@ -18,25 +18,23 @@ import java.io.PrintWriter;
 public class Registration extends HttpServlet {
     private Logger logger;
     private Protector protector;
-    private Configuration exceptionConfig;
+
+    private static final Configuration loggerMessages = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
 
     public Registration() {
         logger = LogManager.getLogger();
         protector = Protector.getInstance();
-        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.info("get in registration");
         resp.setContentType("text/html");
         req.getRequestDispatcher("/links.html").include(req, resp);
         try {
             protector.checkUserAuthorization(req);
-            logger.debug("redirecting to workspace");
+            logger.debug(loggerMessages.getString("redirectWorkspace"));
             resp.sendRedirect("/timeTracker/workspace");
         } catch (ControlException e) {
-            logger.info("successfully include registration.html");
             logger.error(e.getMessage(), e);
             req.getRequestDispatcher("/registration.html").include(req, resp);
         }
@@ -47,9 +45,7 @@ public class Registration extends HttpServlet {
         resp.setContentType("text/html");
 
         try {
-            logger.debug("Start registering process");
             protector.registerUser(req, resp);
-            logger.debug("Registering is success");
             resp.sendRedirect("/timeTracker/workspace");
         } catch (ControlException e) {
             PrintWriter out = resp.getWriter();

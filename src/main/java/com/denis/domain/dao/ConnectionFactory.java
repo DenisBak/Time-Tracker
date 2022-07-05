@@ -19,7 +19,6 @@ public class ConnectionFactory {
     private static DataSource dataSource;
 
     private static Logger logger;
-    private static String className = ConnectionFactory.class.getName();
 
     static {
         MysqlDataSource mysqlDS = new MysqlDataSource();
@@ -39,8 +38,8 @@ public class ConnectionFactory {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            DAOException ex = new DAOException(e);
-            logger.error(exceptionsConfig.getString("connectionFail"), ex);
+            DAOException ex = new DAOException(exceptionsConfig.getString("connectionFail"), e);
+            logger.error(ex);
             throw ex;
         }
     }

@@ -1,10 +1,13 @@
 package com.denis.domain;
 
+import com.denis.domain.configs.ConfigFactory;
+import com.denis.domain.configs.ConfigNames;
 import com.denis.domain.dao.track.TrackDto;
 import com.denis.domain.dao.user.UserDao;
 import com.denis.domain.dao.user.UserDto;
 import com.denis.domain.exceptions.DAOException;
 import com.denis.domain.exceptions.DomainException;
+import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,8 +24,10 @@ public class User {
     private String password;
     private String name;
 
-    private static UserDao dao = UserDao.getInstance();
-    private static Logger logger = LogManager.getLogger();
+    private static final UserDao dao = UserDao.getInstance();
+    private static final Logger logger = LogManager.getLogger();
+    private static final Configuration loggerMessages = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
+
 
     protected User(int id, String username, String password, String name) {
         setId(id);
@@ -52,10 +57,9 @@ public class User {
         User user;
         try {
             dto = dao.retrieveUserDto(username, password);
-            logger.debug("DTO was retrieved " + dto);
             user = new User(dto);
             user.setTracks(Track.getTracksByUserId(dto.getId()));
-            logger.debug("User was retrieved " + user);
+            logger.debug(loggerMessages.getString("userRetrieved") + user);
         } catch (DAOException e) {
             throw new DomainException(e);
         }
@@ -64,11 +68,13 @@ public class User {
 
     @Override
     public String toString() {
-        return "User: " +
-                "id=" + id +
+        return "User{" +
+                "tracks=" + tracks +
+                ", id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", name='" + name + '\'';
+                ", name='" + name + '\'' +
+                '}';
     }
 
     @Override
@@ -126,7 +132,6 @@ public class User {
     }
 
     public List<Track> getTracks() {
-        logger.info("user with id - " + id + " was returned tracks - " + tracks);
         return new ArrayList<>(tracks);
     }
 }

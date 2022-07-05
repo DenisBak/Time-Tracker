@@ -19,14 +19,15 @@ import static com.denis.control.RequestParameters.*;
 import static com.denis.control.RequestParameters.DATE;
 
 public class UserController {
-    private Map<User, List<Track>> tracks = new HashMap<>();
     private static UserController instance;
+
     private static Logger logger;
-    private static Configuration exceptionConfig;
+
+    private static final Configuration exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
+    private static final Configuration loggerMessages  = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
 
     private UserController() {
         logger = LogManager.getLogger();
-        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     public static UserController getInstance() {
@@ -36,14 +37,14 @@ public class UserController {
         return instance;
     }
 
-    public void createTrack(User user, HttpServletRequest req) throws DomainException {
+    public void createAndAddTrack(User user, HttpServletRequest req) throws DomainException {
         try {
             Track t = Track.createTrack(
                     user.getId(), getParameter(DESCRIPTION, req), getParameter(START_TIME, req),
                     getParameter(END_TIME, req), getParameter(DATE, req)
             );
             user.addTrack(t);
-            logger.info("track was created and added to user: " + user + "; track - " + t.getStringRepresentation());
+            logger.info(loggerMessages.getString("trackAdded")  + t.getStringRepresentation() + ", " + user);
 
         } catch (Exception e) {
             logger.error(e);

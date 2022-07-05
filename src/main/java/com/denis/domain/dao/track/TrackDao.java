@@ -99,7 +99,7 @@ public class TrackDao extends Dao {
                     Duration.parse(resultSet.getString(DURATION.getColumnName())),
                     LocalDate.parse(resultSet.getString(DATE.getColumnName()))
             );
-            logger.debug("Was returned " + trackDto);
+            logger.debug(loggerMessages.getString("trackDtoReturned") + trackDto);
             return trackDto;
         } catch (SQLException e) {
             exceptionsConfig.setProperty("failedParameter", id);
@@ -141,7 +141,7 @@ public class TrackDao extends Dao {
                         LocalDate.parse(resultSet.getString(DATE.getColumnName()))
                 );
                 tracksDto.add(trackDto);
-                logger.debug("Was returned " + trackDto + " for userId - " + id);
+                logger.debug(loggerMessages.getString("trackDtoReturned"));
             }
             return tracksDto;
         } catch (SQLException e) {

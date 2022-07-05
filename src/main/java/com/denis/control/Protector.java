@@ -26,16 +26,17 @@ public class Protector {
 
     private static Protector instance;
     private static Logger logger;
-    private static Configuration exceptionConfig;
+
+    private static final Configuration exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
+    private static final Configuration loggerMessages = ConfigFactory.getConfigByName(ConfigNames.LOGGER_MESSAGES);
 
     private Map<String, User> authorizedUsers = new HashMap<>();
 
-    private String sidCookieName = "SID";
-    private int randomNonceSize = 20;
+    private final String sidCookieName = "SID";
+    private final int randomNonceSize = 20;
 
     private Protector() {
         logger = LogManager.getLogger();
-        exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
     }
 
     public static Protector getInstance() {
@@ -48,7 +49,7 @@ public class Protector {
     public void loginUser(HttpServletRequest req, HttpServletResponse resp) throws ControlException {
         String username = req.getParameter(USERNAME.getName());
         String password = req.getParameter(PASSWORD.getName());
-        logger.info("Was retrieved username: " + username + ", password: " + password);
+        logger.info(loggerMessages.getString("startLogin") + username + ", password: " + password);
         try {
             User user = User.getUser(username, password);
 
@@ -69,7 +70,7 @@ public class Protector {
         String secondPassword = req.getParameter(SECOND_PASSWORD_REG.getName());
         String name = req.getParameter(NAME.getName());
 
-        logger.info("register this user : " + username + " " + firstPassword + " " + secondPassword + " " + name);
+        logger.info(loggerMessages.getString("registerUser") + username + " " + firstPassword + " " + secondPassword + " " + name);
         validatePasswords(firstPassword, secondPassword);
         try {
             User user = User.createUser(username, firstPassword, name);
@@ -81,16 +82,15 @@ public class Protector {
     }
 
     public User checkUserAuthorization(HttpServletRequest req) throws ControlException {
-        logger.info("start checking user authorization");
+        logger.info(loggerMessages.getString("startChecking"));
         String cookieSid = getCookieValueByName(req, sidCookieName);
         User user = authorizedUsers.get(cookieSid);
-        logger.info("cookie - " + cookieSid + " user - " + user);
         if (user == null) {
-            logger.info("User is not registered"); // TODO: 6/15/22 create logger messages
-            exceptionConfig.setProperty("failedCookieValue", cookieSid);
-            throw new ControlException(exceptionConfig.getString("noSuchUser"));
+            exceptionConfig.setProperty("failedCookie", cookieSid);
+            ControlException e = new ControlException(exceptionConfig.getString("userNotAuthorized"));
+            logger.error(e);
+            throw e;
         }
-        logger.info("User is registered");
         return user;
     }
 
@@ -119,7 +119,7 @@ public class Protector {
     private Cookie getCookieByName(HttpServletRequest req, String name) {
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals(name)) {
-                logger.info("successfully find cookie - "+ cookie.getName() + ", " + cookie.getValue());
+                logger.info(loggerMessages.getString("cookieFind") + cookie.getName() + ", " + cookie.getValue());
                 return cookie;
             }
         }

@@ -121,7 +121,7 @@ public class UserDao extends Dao {
                     info.getString(PASSWORD.getColumnName()),
                     info.getString(NAME.getColumnName())
             );
-            logger.debug("Was returned " + userDto);
+            logger.debug(loggerMessages.getString("userDtoReturned"));
             return userDto;
         } catch (SQLException e) {
             exceptionsConfig.setProperty("failedUsername", username);
