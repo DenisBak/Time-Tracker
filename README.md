@@ -11,3 +11,5 @@ Web-app that was written on java servlet.
 <li>Create war</li>
 <li>Deploy war to [tomcatHome]/webapps/</li>
 <li>In browser go to [yourLocalHostAddress]/[warName]</li>
+<br>
+<b>Still have questions?</b> Write me - <a href="https://t.me/leshiycc">telegram</a>
