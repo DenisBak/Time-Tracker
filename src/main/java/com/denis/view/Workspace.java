@@ -8,10 +8,10 @@ import com.denis.domain.exceptions.ControlException;
 import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.configs.ConfigFactory;
 import com.denis.domain.configs.ConfigNames;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,6 +33,7 @@ public class Workspace extends HttpServlet {
         exceptionConfig = ConfigFactory.getConfigByName(ConfigNames.EXCEPTIONS);
         userController = UserController.getInstance();
     }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

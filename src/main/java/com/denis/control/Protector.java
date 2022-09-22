@@ -6,9 +6,11 @@ import com.denis.domain.exceptions.ControlException;
 import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.configs.ConfigFactory;
 import com.denis.domain.configs.ConfigNames;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
@@ -80,7 +82,7 @@ public class Protector {
         logger.info(logMessages.getString("startChecking"));
         TemporaryCookie cookie = getTemporaryCookieByName(sidCookieName, req);
 
-        if (cookie.isValid())  {
+        if (cookie.isValid()) {
             return authorizedUsers.get(cookie);
         } else {
             exceptionConfig.setProperty("failedCookie", cookie);
@@ -103,7 +105,7 @@ public class Protector {
         TemporaryCookie cookie = TemporaryCookie.of(sidCookieName, sidValue, SIX_HOURS);
         resp.addCookie(cookie.getCookie());
         authorizedUsers.put(cookie, user);
-        logger.info("authorized was successful "+ cookie + " " + user);
+        logger.info("authorized was successful " + cookie + " " + user);
     }
 
     private boolean validatePasswords(String firstPassword, String secondPassword) throws ControlException {
@@ -112,7 +114,8 @@ public class Protector {
 
     private TemporaryCookie getTemporaryCookieByName(String name, HttpServletRequest req) {
         String cookieValue = "";
-        logger.info("start find temporary cookie by name "+ name);
+        logger.info("start find temporary cookie by name " + name);
+        if (req.getCookies() == null) return TemporaryCookie.get(cookieValue);
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals(name)) {
                 logger.info(logMessages.getString("cookieFind") + cookie.getName() + ", " + cookie.getValue());
@@ -144,7 +147,6 @@ public class Protector {
 
     private static class TemporaryCookie {
         private static Set<TemporaryCookie> activeCookies;
-
         private final Cookie cookie;
         private final LocalDateTime expiredTime;
         private static TemporaryCookie invalid;
@@ -158,7 +160,7 @@ public class Protector {
             this.cookie = new Cookie(name, value);
             this.cookie.setMaxAge(seconds);
             this.expiredTime = LocalDateTime.now().plusSeconds(seconds);
-            activeCookies.add(this);
+//            activeCookies.add(this);
         }
 
         public static TemporaryCookie of(String name, String value, int seconds) {
@@ -170,21 +172,16 @@ public class Protector {
         }
 
         public static TemporaryCookie get(String value) {
-            try {
-                logger.info("start finding cookie by value " + value);
-                for (TemporaryCookie cookie : activeCookies) {
-                    if (cookie.getCookie().getValue().equals(value)) { // TODO: 7/15/22 find cookie
-                        logger.info("find " + value);
-                        return cookie;
-                    }
-                }
 
-                // TODO: 7/15/22 remove all bookmarks
-                logger.info("can't find, return " + getInvalid());
-                return getInvalid();
-            } catch (Throwable e) {
-                logger.info(e.getMessage(), e); // TODO: 7/18/22 unsupported ex because i can't add to Map.getKeySet()
+            logger.info("start finding cookie by value " + value);
+            for (TemporaryCookie cookie : activeCookies) {
+                if (cookie.getCookie().getValue().equals(value)) { // TODO: 7/15/22 find cookie
+                    logger.info("find " + value);
+                    return cookie;
+                }
             }
+
+            logger.info("can't find, return " + getInvalid());
             return getInvalid();
         }
 
