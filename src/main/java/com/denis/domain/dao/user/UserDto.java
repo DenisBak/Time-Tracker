@@ -13,7 +13,7 @@ public class UserDto {
     private String name;
 
     protected UserDto(int id, String username, String password, String name) {
-        assert id > 0;
+        assert id >= 0;
 
         this.id = id;
         this.username = Objects.requireNonNull(username);

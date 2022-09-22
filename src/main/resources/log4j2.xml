@@ -6,15 +6,11 @@
         </Console>
         <File name="LogToFile" fileName="logs/${date:MM-yyyy}/Log-${date:dd-MM-yyyy}.log">
             <PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+                <Pattern>%d %p %c{1.} %M [%t] %m() %n</Pattern>
             </PatternLayout>
         </File>
     </Appenders>
     <Loggers>
-<!--        <Logger name="com.denis" level="debug" additivity="false">-->
-<!--            <AppenderRef ref="LogToFile"/>-->
-<!--            <AppenderRef ref="LogToConsole"/>-->
-<!--        </Logger>-->
         <Root level="debug">
             <AppenderRef ref="LogToFile"/>
             <AppenderRef ref="LogToConsole"/>
