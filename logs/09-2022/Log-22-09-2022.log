@@ -1,0 +1,1 @@
+2022-09-22 22:19:39,869 ERROR c.d.d.d.ConnectionFactory getConnection [main] com.denis.domain.exceptions.DAOException() 

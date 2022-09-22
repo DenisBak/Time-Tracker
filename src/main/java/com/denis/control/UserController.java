@@ -6,7 +6,7 @@ import com.denis.domain.exceptions.DomainException;
 import com.denis.domain.exceptions.NegativeDurationException;
 import com.denis.domain.configs.ConfigFactory;
 import com.denis.domain.configs.ConfigNames;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
