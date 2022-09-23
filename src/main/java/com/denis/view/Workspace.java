@@ -54,7 +54,7 @@ public class Workspace extends HttpServlet {
                 out.println("<h3>" + track.getStringRepresentation() + "</h3>");
             }
         } catch (ControlException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(e);
 
             req.getRequestDispatcher("/login").include(req, resp);
             out.println(

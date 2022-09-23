@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Login extends HttpServlet {
-    private Logger logger;
-    private Protector protector;
-    private Configuration exceptionConfig;
+    private static Logger logger;
+    private static Protector protector;
+    private static Configuration exceptionConfig;
 
     public Login() {
         logger = LogManager.getLogger();
@@ -34,7 +34,7 @@ public class Login extends HttpServlet {
             protector.checkUserAuthorization(req);
             resp.sendRedirect("/timeTracker/workspace");
         } catch (ControlException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(e);
             req.getRequestDispatcher("/login.html").include(req, resp);
         }
     }
@@ -49,7 +49,7 @@ public class Login extends HttpServlet {
         } catch (ControlException e) {
             PrintWriter out = resp.getWriter();
 
-            logger.error(e.getMessage(), e);
+            logger.error(e);
 
             req.getRequestDispatcher("/links.html").include(req, resp);
             req.getRequestDispatcher("/login.html").include(req, resp);
