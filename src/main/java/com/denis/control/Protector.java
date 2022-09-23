@@ -74,7 +74,7 @@ public class Protector {
 
             authorizeUser(user, resp);
         } catch (DomainException e) {
-            throw new ControlException(exceptionConfig.getString("usernameAlreadyTaken"));
+            throw new ControlException(exceptionConfig.getString("usernameAlreadyTaken"), e);
         }
     }
 

@@ -35,7 +35,7 @@ public class Registration extends HttpServlet {
             logger.debug(loggerMessages.getString("redirectWorkspace"));
             resp.sendRedirect("/timeTracker/workspace");
         } catch (ControlException e) {
-            logger.error(e.getMessage(), e);
+            logger.error(e);
             req.getRequestDispatcher("/registration.html").include(req, resp);
         }
     }
@@ -50,7 +50,7 @@ public class Registration extends HttpServlet {
         } catch (ControlException e) {
             PrintWriter out = resp.getWriter();
 
-            logger.error(e.getMessage(), e);
+            logger.error(e);
 
             req.getRequestDispatcher("/links.html").include(req, resp);
             req.getRequestDispatcher("/registration.html").include(req, resp);

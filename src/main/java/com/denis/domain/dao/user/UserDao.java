@@ -4,7 +4,9 @@ import com.denis.domain.User;
 import com.denis.domain.dao.ConnectionFactory;
 import com.denis.domain.dao.Dao;
 import com.denis.domain.exceptions.DAOException;
+
 import static com.denis.domain.dao.ColumnNames.*;
+
 import java.sql.*;
 
 public class UserDao extends Dao {
@@ -27,12 +29,36 @@ public class UserDao extends Dao {
         createUser(user.getUsername(), user.getPassword(), user.getName());
     }
 
+    public static void main(String[] args) {
+        String createUserStatement;
+        PreparedStatement statement = null;
+        Connection connection;
+        String username = "densdfsd";
+
+
+        try {
+            createUserStatement = statementsConfig.getString("createUser");
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(createUserStatement);
+
+            statement.setString(1, username);
+            String password = "FUCKYOUho228337!";
+            statement.setString(2, password);
+            String name = "den";
+            statement.setString(3, name);
+
+            statement.execute();
+        } catch (DAOException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void createUser(String username, String password, String name) throws DAOException {
         if (username == null || password == null || name == null) {
             String failedParam;
-            if      (username == null) failedParam = "Username";
+            if (username == null) failedParam = "Username";
             else if (password == null) failedParam = "Password";
-            else                       failedParam = "Name";
+            else failedParam = "Name";
             exceptionsConfig.setProperty("failedParameter", failedParam);
             throw new DAOException(new NullPointerException(
                     exceptionsConfig.getString("parameterNull")
@@ -94,7 +120,7 @@ public class UserDao extends Dao {
         if (username == null || password == null) {
             String failedParam;
             if (username == null) failedParam = "Username";
-            else                  failedParam = "Password";
+            else failedParam = "Password";
             exceptionsConfig.setProperty("failedParameter", failedParam);
             throw new DAOException(new NullPointerException(
                     exceptionsConfig.getString("parameterNull")
